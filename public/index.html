@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Management App</title>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.10.0/dist/cdn.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container" x-data="carApp()" x-init="init()">
+        <h1>Car Management</h1>
+        
+        <!-- Create Car Form -->
+        <section>
+            <h2>Create New Car</h2>
+            <input type="text" x-model="newCar.color" placeholder="Color">
+            <input type="text" x-model="newCar.make" placeholder="Make">
+            <input type="text" x-model="newCar.model" placeholder="Model">
+            <input type="text" x-model="newCar.reg_number" placeholder="Registration Number">
+            <select x-model="newCar.location">
+                <option value="">Select Town</option>
+                <option value="CJ">Paarl</option>
+                <option value="CY">Bellville</option>
+                <option value="CL">Stellenbosch</option>
+                <option value="CK">Malmesbury</option>
+                <option value="CA">Cape Town</option>
+                <option value="CF">Kuilsriver</option>
+            </select>
+            <button @click="addCar()">Add Car</button>
+        </section>
+        
+        <!-- Display Car List -->
+        <section>
+            <h2>Car List</h2>
+            <h6 x-text="cars.length"></h6>
+            <ul>
+                <template x-for="car in cars" >
+                    <li>
+                        <strong>Make:</strong> <span x-text="car.make"></span>, 
+                        <strong>Model:</strong> <span x-text="car.model"></span>, 
+                        <strong>Color:</strong> <span x-text="car.color"></span>, 
+                        <strong>Registration Number:</strong> <span x-text="car.reg_number"></span>, 
+                        <strong>Location:</strong> <span x-text="Object.keys(townCodes).find(town => townCodes[town] === car.location)"></span>
+                        <button @click="editCar(car)">Edit</button>
+                        <button @click="deleteCar(car.id)">Delete</button>
+                    </li>
+                </template>
+            </ul>
+        </section>
+        
+        <!-- <section x-show="editingCar">
+            <h2>Edit Car</h2>
+            <input type="text" x-model="editingCar.color" placeholder="Color">
+            <input type="text" x-model="editingCar.make" placeholder="Make">
+            <input type="text" x-model="editingCar.model" placeholder="Model">
+            <input type="text" x-model="editingCar.reg_number" placeholder="Registration Number">
+            <select x-model="editingCar.location">
+                <option value="">Select Town</option>
+                <option value="CJ">Paarl</option>
+                <option value="CY">Bellville</option>
+                <option value="CL">Stellenbosch</option>
+                <option value="CK">Malmesbury</option>
+                <option value="CA">Cape Town</option>
+                <option value="CF">Kuilsriver</option>
+            </select>
+            <button @click="updateCar()">Update Car</button>
+            <button @click="cancelEdit()">Cancel</button>
+        </section>
+        
+        <section>
+            <h2>Least Popular Car Model in Kuilsriver</h2>
+            <button @click="getLeastPopularCarModel()">Fetch Least Popular Model</button>
+            <div x-show="leastPopularModel">
+                <p><strong>Make:</strong> <span x-text="leastPopularModel.make"></span></p>
+                <p><strong>Model:</strong> <span x-text="leastPopularModel.model"></span></p>
+                <p><strong>Color:</strong> <span x-text="leastPopularModel.color"></span></p>
+                <p><strong>Registration Number:</strong> <span x-text="leastPopularModel.reg_number"></span></p>
+                <p><strong>Popularity:</strong> <span x-text="leastPopularModel.popularity"></span></p>
+            </div>
+        </section> -->
+
+        <!-- Pop-up Car List -->
+        <!-- <div x-show="showPopUp" class="popup">
+            <button @click="showPopUp = false">Close</button>
+            <h2>Car List</h2>
+            <ul>
+                <template x-for="car in cars" :key="car.id">
+                    <li>
+                        <strong>Make:</strong> <span x-text="car.make"></span>, 
+                        <strong>Model:</strong> <span x-text="car.model"></span>, 
+                        <strong>Color:</strong> <span x-text="car.color"></span>, 
+                        <strong>Registration Number:</strong> <span x-text="car.reg_number"></span>, 
+                        <strong>Location:</strong> <span x-text="Object.keys(townCodes).find(town => townCodes[town] === car.location)"></span>
+                    </li>
+                </template>
+            </ul>
+        </div> -->
+    </div>
+    <script src="carApp.js"></script>
+    
+</body>
+</html>
